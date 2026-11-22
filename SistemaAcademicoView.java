@@ -12,14 +12,10 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Interface Gráfica Moderna em Dark Theme (Midnight Pro Edition) para o Sistema Acadêmico.
- * Demonstra uso avançado e contemporâneo da biblioteca nativa Java Swing (javax.swing):
- * - Custom UI de Abas (ModernTabbedPaneUI) eliminando interferências de temas legados.
- * - Filtro em tempo real de tabelas (TableRowSorter e RowFilter com DocumentListener).
- * - Gráfico procedural vetorial em Java 2D (Graphics2D) integrado ao painel analítico.
- * - Barra de progresso moderna (JProgressBar) de ocupação acadêmica.
- * - Atalhos globais de teclado (KeyStroke e ActionMap).
- * - 100% de conformidade com os 5 requisitos do Trabalho 06 (UFU/FACOM).
+ * Classe responsável por construir e gerenciar toda a interface gráfica do Sistema Acadêmico.
+ * Organiza os componentes visuais das três abas principais (Cadastro, Listagem e Estatísticas),
+ * define os gerenciadores de layout, trata os eventos de interação do usuário e mantém
+ * a lista de discentes em memória.
  */
 public class SistemaAcademicoView {
 
@@ -76,14 +72,15 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Cabeçalho Superior com Logo 3D e Informações Acadêmicas
+     * Constrói o cabeçalho superior da aplicação, exibindo o logotipo,
+     * título do sistema e indicador visual de capacidade.
      */
     public JPanel criarHeaderApp() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(new Color(8, 12, 19)); // Deep Obsidian
+        header.setBackground(new Color(8, 12, 19)); // Tom escuro do cabeçalho
         header.setBorder(new EmptyBorder(12, 22, 12, 22));
 
-        // Lado Esquerdo: Logo 3D e Títulos
+        // Lado esquerdo: logo e identificação do sistema
         JPanel ladoEsquerdo = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 0));
         ladoEsquerdo.setOpaque(false);
 
@@ -109,7 +106,7 @@ public class SistemaAcademicoView {
 
         header.add(ladoEsquerdo, BorderLayout.WEST);
 
-        // Lado Direito: Barra de Capacidade e Badges
+        // Lado direito: barra de capacidade e informações contextuais
         JPanel ladoDireito = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 8));
         ladoDireito.setOpaque(false);
 
@@ -152,16 +149,15 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Requisito 1:
-     * Barra de menus (JMenuBar) com menus "Arquivo" e "Ajuda",
-     * incluindo itens de menu que utilizem componentes JMenu e JMenuItem.
+     * Monta a barra de menus superior (JMenuBar) com os menus "Arquivo" e "Ajuda",
+     * configurando mnemônicos e teclas de atalho para as principais ações do sistema.
      */
     public JMenuBar criarBarraMenus() {
         JMenuBar bar = new JMenuBar();
         bar.setBackground(new Color(13, 18, 28));
         bar.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ModernComponents.COLOR_BORDER));
 
-        // Menu "Arquivo"
+        // Menu "Arquivo" - operações de cadastro, salvamento e saída
         JMenu menuArquivo = new JMenu("Arquivo");
         menuArquivo.setFont(new Font("SansSerif", Font.PLAIN, 12));
         menuArquivo.setForeground(ModernComponents.COLOR_TEXT_PRIMARY);
@@ -193,7 +189,7 @@ public class SistemaAcademicoView {
         menuArquivo.addSeparator();
         menuArquivo.add(itemSair);
 
-        // Menu "Ajuda"
+        // Menu "Ajuda" - instruções de atalhos e informações do projeto
         JMenu menuAjuda = new JMenu("Ajuda");
         menuAjuda.setFont(new Font("SansSerif", Font.PLAIN, 12));
         menuAjuda.setForeground(ModernComponents.COLOR_TEXT_PRIMARY);
@@ -229,10 +225,8 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Requisito 2:
-     * JTabbedPane contendo três abas distintas.
-     * Implementa ModernTabbedPaneUI e setTabComponentAt para garantir
-     * contraste perfeito de 100% no fundo escuro, eliminando o cinza padrão do SO.
+     * Constrói o painel com abas (JTabbedPane) para navegação entre as telas do sistema,
+     * aplicando o estilo visual customizado e vinculando atalhos de teclado (Ctrl+1, Ctrl+2, Ctrl+3).
      */
     public JTabbedPane criarTabbedPane() {
         tabbedPane = new JTabbedPane();
@@ -240,21 +234,21 @@ public class SistemaAcademicoView {
         tabbedPane.setBackground(ModernComponents.COLOR_BG);
         tabbedPane.setOpaque(true);
 
-        // Aplica o Custom UI das abas
+        // Aplica o tema visual customizado das abas
         tabbedPane.setUI(new ModernComponents.ModernTabbedPaneUI());
 
-        // Adiciona as abas com os painéis
+        // Adiciona as três abas principais com seus respectivos painéis
         tabbedPane.addTab("Cadastro de Aluno", criarPainelCadastro());
         tabbedPane.addTab("Lista de Alunos", criarPainelLista());
         tabbedPane.addTab("Estatísticas", criarPainelEstatisticas());
 
-        // Configura Tab Components customizados com alto contraste (Pill Style)
+        // Configura o cabeçalho personalizado de cada aba com ícone e texto
         configurarTabComponents();
 
-        // Listener para sincronizar a estilização visual das abas ao alternar
+        // Atualiza a aparência do cabeçalho quando o usuário alterna de aba
         tabbedPane.addChangeListener(e -> atualizarEstiloTabs());
 
-        // Configura atalhos de teclado globais (Ctrl+1, Ctrl+2, Ctrl+3)
+        // Registra os atalhos de teclado globais (Ctrl+1, Ctrl+2, Ctrl+3)
         configurarAtalhosAbas();
 
         return tabbedPane;
@@ -277,7 +271,7 @@ public class SistemaAcademicoView {
             tabComponent.add(lblIcon);
             tabComponent.add(lblText);
 
-            // Permite clicar no componente customizado para selecionar a aba
+            // Permite alternar a aba ao clicar diretamente no painel customizado do cabeçalho
             tabComponent.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -301,10 +295,10 @@ public class SistemaAcademicoView {
                     if (comp instanceof JLabel && "tabTitle".equals(comp.getName())) {
                         JLabel lbl = (JLabel) comp;
                         if (i == sel) {
-                            lbl.setForeground(Color.WHITE); // Branco nítido na aba ativa
+                            lbl.setForeground(Color.WHITE); // Aba ativa em branco destacado
                             lbl.setFont(new Font("SansSerif", Font.BOLD, 13));
                         } else {
-                            lbl.setForeground(ModernComponents.COLOR_TEXT_LABEL); // Slate 400 na inativa
+                            lbl.setForeground(ModernComponents.COLOR_TEXT_LABEL); // Aba inativa com tom atenuado
                             lbl.setFont(new Font("SansSerif", Font.PLAIN, 13));
                         }
                     }
@@ -337,23 +331,17 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Requisito 2 e Requisito 5:
-     * Aba "Cadastro de Aluno":
-     * - Componentes: JLabel, JTextField para nome, JComboBox para curso,
-     *   JRadioButton em ButtonGroup para turno, JCheckBox para bolsista,
-     *   JButton para salvar e limpar.
-     * - Layouts aplicados explicitamente:
-     *   * LAYOUT 1: BorderLayout (contêiner geral da aba)
-     *   * LAYOUT 2: GridLayout (alinhamento em grade simétrica dos campos)
-     *   * LAYOUT 3: FlowLayout (alinhamento dos botões e dos radio buttons)
+     * Monta o formulário da aba de Cadastro de Alunos.
+     * Utiliza BorderLayout como contêiner principal da aba, GridLayout para organizar
+     * os campos e rótulos em duas colunas simétricas e FlowLayout para os botões de ação e turnos.
      */
     public JPanel criarPainelCadastro() {
-        // REQUISITO 5 - LAYOUT 1: BorderLayout (contêiner principal da aba)
+        // Painel principal da aba estruturado com BorderLayout
         JPanel painelAba = new JPanel(new BorderLayout(15, 15));
         painelAba.setBackground(ModernComponents.COLOR_BG);
         painelAba.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        // Cabeçalho da Aba (BorderLayout)
+        // Cabeçalho da aba com título e instruções
         JPanel painelCabecalho = new JPanel(new BorderLayout());
         painelCabecalho.setOpaque(false);
 
@@ -369,16 +357,16 @@ public class SistemaAcademicoView {
 
         painelAba.add(painelCabecalho, BorderLayout.NORTH);
 
-        // Card Central Escuro
+        // Painel central (card) para destacar os campos do formulário
         ModernComponents.ModernCard cardFormulario = new ModernComponents.ModernCard(16);
         cardFormulario.setLayout(new BorderLayout(15, 15));
         cardFormulario.setBorder(new EmptyBorder(22, 26, 22, 26));
 
-        // REQUISITO 5 - LAYOUT 2: GridLayout (5 linhas, 2 colunas com espaçamento simétrico 16x16)
+        // Disposição em grade (5 linhas por 2 colunas) com espaçamento de 16px
         JPanel painelGrid = new JPanel(new GridLayout(5, 2, 16, 16));
         painelGrid.setOpaque(false);
 
-        // 1. Matrícula (JLabel + ModernTextField)
+        // Campo: Matrícula
         JLabel lblMatricula = new JLabel("Número de Matrícula:");
         lblMatricula.setFont(new Font("SansSerif", Font.BOLD, 13));
         lblMatricula.setForeground(ModernComponents.COLOR_TEXT_LABEL);
@@ -387,7 +375,7 @@ public class SistemaAcademicoView {
         txtMatricula.setText("");
         txtMatricula.setToolTipText("Informe o número de matrícula do estudante");
 
-        // 2. Nome do Aluno (JLabel + ModernTextField)
+        // Campo: Nome Completo
         JLabel lblNome = new JLabel("Nome Completo do Aluno:");
         lblNome.setFont(new Font("SansSerif", Font.BOLD, 13));
         lblNome.setForeground(ModernComponents.COLOR_TEXT_LABEL);
@@ -396,7 +384,7 @@ public class SistemaAcademicoView {
         txtNome.setText("");
         txtNome.setToolTipText("Digite o nome completo");
 
-        // 3. Seleção de Curso (JLabel + JComboBox)
+        // Campo: Curso de Graduação
         JLabel lblCurso = new JLabel("Curso de Graduação:");
         lblCurso.setFont(new Font("SansSerif", Font.BOLD, 13));
         lblCurso.setForeground(ModernComponents.COLOR_TEXT_LABEL);
@@ -413,12 +401,12 @@ public class SistemaAcademicoView {
         cbCurso.setForeground(ModernComponents.COLOR_TEXT_PRIMARY);
         cbCurso.setSelectedIndex(1);
 
-        // 4. Escolha de Turno (JLabel + JRadioButton em ButtonGroup)
+        // Campo: Turno das Aulas (seleção mutuamente exclusiva via ButtonGroup)
         JLabel lblTurno = new JLabel("Turno de Aulas:");
         lblTurno.setFont(new Font("SansSerif", Font.BOLD, 13));
         lblTurno.setForeground(ModernComponents.COLOR_TEXT_LABEL);
 
-        // REQUISITO 5 - LAYOUT 3 (Uso A): FlowLayout interno para alinhamento horizontal dos RadioButtons
+        // Alinhamento horizontal dos RadioButtons com FlowLayout
         JPanel painelTurnos = new JPanel(new FlowLayout(FlowLayout.LEFT, 16, 0));
         painelTurnos.setOpaque(false);
 
@@ -448,7 +436,7 @@ public class SistemaAcademicoView {
         painelTurnos.add(rbVespertino);
         painelTurnos.add(rbNoturno);
 
-        // 5. Indicação de Bolsista (JLabel + JCheckBox)
+        // Campo: Indicação de Bolsista (CheckBox)
         JLabel lblBolsista = new JLabel("Condição Financeira / Bolsa:");
         lblBolsista.setFont(new Font("SansSerif", Font.BOLD, 13));
         lblBolsista.setForeground(ModernComponents.COLOR_TEXT_LABEL);
@@ -459,7 +447,7 @@ public class SistemaAcademicoView {
         chkBolsista.setOpaque(false);
         chkBolsista.setSelected(true);
 
-        // Adiciona todos os componentes ao GridLayout
+        // Adiciona os rótulos e campos na ordem correspondente do GridLayout
         painelGrid.add(lblMatricula);
         painelGrid.add(txtMatricula);
 
@@ -478,7 +466,7 @@ public class SistemaAcademicoView {
         cardFormulario.add(painelGrid, BorderLayout.CENTER);
         painelAba.add(cardFormulario, BorderLayout.CENTER);
 
-        // REQUISITO 5 - LAYOUT 3 (Uso B): FlowLayout para posicionamento organizado dos botões de ação
+        // Botões de ação posicionados à direita com FlowLayout
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 14, 6));
         painelBotoes.setOpaque(false);
 
@@ -509,19 +497,16 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Requisito 3:
-     * Aba "Lista de Alunos":
-     * - JTable inserida dentro de um JScrollPane com colunas apropriadas
-     * - Botão posicionado de forma organizada na interface
-     * Adição de recurso avançado javax.swing:
-     * - TableRowSorter com RowFilter para busca em tempo real com DocumentListener.
+     * Constrói a aba de Listagem dos Alunos matriculados.
+     * Exibe os registros em uma JTable com barras de rolagem (JScrollPane),
+     * filtro dinâmico por digitação e botões de ação para gerenciamento.
      */
     public JPanel criarPainelLista() {
         JPanel painelAba = new JPanel(new BorderLayout(12, 12));
         painelAba.setBackground(ModernComponents.COLOR_BG);
         painelAba.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        // Cabeçalho da Lista + Barra de Busca em Tempo Real
+        // Cabeçalho da listagem com contador de alunos e campo de busca rápida
         JPanel painelTopo = new JPanel(new BorderLayout(10, 10));
         painelTopo.setOpaque(false);
 
@@ -540,7 +525,7 @@ public class SistemaAcademicoView {
 
         painelTopo.add(infoTexto, BorderLayout.WEST);
 
-        // Campo de Pesquisa em Tempo Real (Demonstrando uso avançado do javax.swing.table)
+        // Campo de pesquisa com filtro dinâmico acionado a cada tecla digitada
         JPanel painelBusca = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 0));
         painelBusca.setOpaque(false);
 
@@ -566,12 +551,12 @@ public class SistemaAcademicoView {
 
         painelAba.add(painelTopo, BorderLayout.NORTH);
 
-        // Card envolvendo a JTable
+        // Painel arredondado que envolve a tabela
         ModernComponents.ModernCard cardTabela = new ModernComponents.ModernCard(16);
         cardTabela.setLayout(new BorderLayout());
         cardTabela.setBorder(new EmptyBorder(10, 12, 10, 12));
 
-        // Configuração da JTable com TableRowSorter
+        // Definição das colunas e criação do modelo não editável diretamente nas células
         String[] colunas = {"Matrícula", "Nome do Aluno", "Curso", "Turno", "Bolsista"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
@@ -596,13 +581,13 @@ public class SistemaAcademicoView {
         tabelaAlunos.setShowGrid(false);
         tabelaAlunos.setIntercellSpacing(new Dimension(0, 0));
 
-        // Cabeçalho estilizado escuro
+        // Estilização do cabeçalho da tabela
         tabelaAlunos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 12));
         tabelaAlunos.getTableHeader().setBackground(new Color(13, 18, 28));
         tabelaAlunos.getTableHeader().setForeground(ModernComponents.COLOR_TEXT_LABEL);
         tabelaAlunos.getTableHeader().setPreferredSize(new Dimension(0, 36));
 
-        // Renderizadores
+        // Renderizadores de célula: badge para bolsistas e alinhamentos específicos
         tabelaAlunos.getColumnModel().getColumn(4).setCellRenderer(new ModernComponents.BadgeTableCellRenderer());
 
         DefaultTableCellRenderer renderizadorEscuro = new DefaultTableCellRenderer() {
@@ -651,7 +636,7 @@ public class SistemaAcademicoView {
         cardTabela.add(scrollPane, BorderLayout.CENTER);
         painelAba.add(cardTabela, BorderLayout.CENTER);
 
-        // Painel de botões organizado com FlowLayout e Ícones 3D
+        // Botões de ação posicionados na base com FlowLayout alinhado à direita
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT, 12, 6));
         painelBotoes.setOpaque(false);
 
@@ -721,21 +706,16 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Requisito 4:
-     * Aba "Estatísticas":
-     * - JSplitPane para dividir a tela, contendo:
-     *   * de um lado um JTextArea
-     *   * do outro um botão
-     * demonstrando o uso de divisão de painéis.
-     * Adicional moderno javax.swing:
-     * - Gráfico procedural interativo em Java 2D (ModernBarChart).
+     * Monta a aba de Estatísticas Acadêmicas.
+     * Emprega um JSplitPane para dividir o espaço entre o relatório analítico formatado
+     * (JTextArea com rolagem) e o painel visual com gráfico de barras e botão de atualização.
      */
     public JPanel criarPainelEstatisticas() {
         JPanel painelAba = new JPanel(new BorderLayout(15, 15));
         painelAba.setBackground(ModernComponents.COLOR_BG);
         painelAba.setBorder(new EmptyBorder(15, 20, 15, 20));
 
-        // Cabeçalho
+        // Cabeçalho com título da aba analítica
         JPanel painelCabecalho = new JPanel(new BorderLayout());
         painelCabecalho.setOpaque(false);
 
@@ -744,14 +724,14 @@ public class SistemaAcademicoView {
         lblTitulo.setForeground(ModernComponents.COLOR_TEXT_TITLE);
         painelCabecalho.add(lblTitulo, BorderLayout.WEST);
 
-        JLabel lblSub = new JLabel("Divisão de painéis (JSplitPane) com relatório textual, telemetria e gráficos em tempo real.");
+        JLabel lblSub = new JLabel("Divisão de painéis (JSplitPane) com relatório textual e gráficos em tempo real.");
         lblSub.setFont(new Font("SansSerif", Font.PLAIN, 12));
         lblSub.setForeground(ModernComponents.COLOR_TEXT_LABEL);
         painelCabecalho.add(lblSub, BorderLayout.SOUTH);
 
         painelAba.add(painelCabecalho, BorderLayout.NORTH);
 
-        // Lado 1 (Esquerdo): JTextArea com estilo Terminal / Dashboard Moderno
+        // Lado esquerdo do JSplitPane: Área de texto formatada com o relatório consolidado
         ModernComponents.ModernCard cardTerminal = new ModernComponents.ModernCard(16);
         cardTerminal.setLayout(new BorderLayout());
         cardTerminal.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -760,7 +740,7 @@ public class SistemaAcademicoView {
         txtEstatisticas.setFont(new Font("Monospaced", Font.PLAIN, 12));
         txtEstatisticas.setEditable(false);
         txtEstatisticas.setBackground(new Color(8, 12, 19));
-        txtEstatisticas.setForeground(new Color(56, 189, 248)); // Ciano brilhante
+        txtEstatisticas.setForeground(new Color(56, 189, 248)); // Ciano brilhante para contraste
         txtEstatisticas.setCaretColor(new Color(56, 189, 248));
         txtEstatisticas.setMargin(new Insets(14, 16, 14, 16));
         txtEstatisticas.setText(obterTextoEstatisticas());
@@ -770,12 +750,12 @@ public class SistemaAcademicoView {
         scrollArea.setBorder(BorderFactory.createEmptyBorder());
         cardTerminal.add(scrollArea, BorderLayout.CENTER);
 
-        // Lado 2 (Direito): Card moderno contendo o Botão e Gráfico Procedural
+        // Lado direito do JSplitPane: Gráfico de distribuição e botão de recálculo
         ModernComponents.ModernCard cardDireito = new ModernComponents.ModernCard(16);
         cardDireito.setLayout(new BorderLayout(10, 10));
         cardDireito.setBorder(new EmptyBorder(16, 16, 16, 16));
 
-        // Topo do card: Ícone 3D e Informação
+        // Identificação visual do gráfico
         JPanel topoCard = new JPanel();
         topoCard.setLayout(new BoxLayout(topoCard, BoxLayout.Y_AXIS));
         topoCard.setOpaque(false);
@@ -794,11 +774,11 @@ public class SistemaAcademicoView {
         topoCard.add(lblAcaoInfo);
         cardDireito.add(topoCard, BorderLayout.NORTH);
 
-        // Centro do card: Gráfico procedural em Java 2D
+        // Componente do gráfico de barras desenhado com Java 2D
         graficoBarras = new ModernComponents.ModernBarChart(obterDadosGraficoTurnos());
         cardDireito.add(graficoBarras, BorderLayout.CENTER);
 
-        // Sul do card: Botão Recalcular Estatísticas (atendendo o requisito de ter o botão do outro lado)
+        // Botão para recalcular as métricas com base no estado atual da lista
         JPanel sulCard = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 5));
         sulCard.setOpaque(false);
 
@@ -821,7 +801,7 @@ public class SistemaAcademicoView {
         sulCard.add(btnRecalcular);
         cardDireito.add(sulCard, BorderLayout.SOUTH);
 
-        // JSplitPane dividindo a tela
+        // Divisor horizontal (JSplitPane) unindo o relatório textual e o painel gráfico
         splitPaneEstatisticas = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, cardTerminal, cardDireito);
         splitPaneEstatisticas.setContinuousLayout(true);
         splitPaneEstatisticas.setOneTouchExpandable(true);
@@ -850,7 +830,7 @@ public class SistemaAcademicoView {
     }
 
     /**
-     * Barra de status inferior
+     * Barra de status posicionada no rodapé da janela principal.
      */
     public JPanel criarBarraStatus() {
         JPanel status = new JPanel(new BorderLayout());

@@ -3,7 +3,9 @@ import java.awt.*;
 import java.io.File;
 
 /**
- * Utilitário para carregamento resiliente de ícones 3D com fallback automático.
+ * Utilitário para carregar e redimensionar ícones da interface.
+ * Caso a imagem não seja encontrada na pasta de recursos, desenha
+ * programaticamente um ícone vetorial básico para não deixar a interface vazia.
  */
 public class IconHelper {
 
@@ -15,7 +17,7 @@ public class IconHelper {
             Image img = icon.getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH);
             return new ImageIcon(img);
         }
-        // Fallback procedural se a imagem não for encontrada
+        // Se o arquivo PNG não for localizado, gera um ícone simplificado em tempo de execução
         return new ImageIcon(criarIconeFallback(filename, w, h));
     }
 

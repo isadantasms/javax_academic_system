@@ -2,25 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * MINISTÉRIO DA EDUCAÇÃO
- * UNIVERSIDADE FEDERAL DE UBERLÂNDIA - UFU
- * FACULDADE DE COMPUTAÇÃO - FACOM
- * SISTEMAS DE INFORMAÇÃO
- * 
- * Trabalho 06: Interfaces Gráficas em Swing
- * Tema: Sistema Acadêmico (Modern UI Edition)
- * 
- * CONFERÊNCIA DOS REQUISITOS DO EDITAL:
- * 1. Janela principal (JFrame) com título apropriado, centralizada na tela, 
- *    barra de menus (JMenuBar) com menus "Arquivo" e "Ajuda", utilizando JMenu e JMenuItem.
- * 2. JTabbedPane contendo três abas distintas: "Cadastro de Aluno", "Lista de Alunos" 
- *    e "Estatísticas". Na aba de Cadastro: JLabel, JTextField, JComboBox, JRadioButton 
- *    em ButtonGroup, JCheckBox e JButton (Salvar e Limpar).
- * 3. Aba "Lista de Alunos": JTable dentro de JScrollPane com colunas apropriadas e botões.
- * 4. Aba "Estatísticas": JSplitPane dividindo a tela com JTextArea de um lado e JButton do outro.
- * 5. Organização visual, alinhamento, uso explícito de pelo menos 3 tipos distintos de Layout 
- *    (BorderLayout, GridLayout e FlowLayout) e Look and Feel do sistema operacional aplicado 
- *    ANTES da instanciação da janela.
+ * Universidade Federal de Uberlândia - UFU
+ * Faculdade de Computação - FACOM
+ * Bacharelado em Sistemas de Informação
+ * Programação Orientada a Objetos (POO) - Trabalho 06
+ *
+ * Janela principal do Sistema Acadêmico. Estende JFrame e organiza
+ * a estrutura base da interface gráfica: menu superior, cabeçalho institucional,
+ * painel com abas navegáveis e barra de status.
+ *
+ * @author Isabela Dantas de Moraes
  */
 public class SistemaAcademico extends JFrame {
 
@@ -32,41 +23,41 @@ public class SistemaAcademico extends JFrame {
 
         this.view = new SistemaAcademicoView(this);
 
-        // 1. Barra de Menus (JMenuBar) com JMenu e JMenuItem
+        // Barra de menus superior (Arquivo e Ajuda)
         setJMenuBar(view.criarBarraMenus());
 
-        // 5. REQUISITO 5 - LAYOUT 1: BorderLayout aplicado na janela principal
+        // Organização do contêiner principal com BorderLayout
         getContentPane().setLayout(new BorderLayout());
 
-        // Header Superior com Logo 3D
+        // Cabeçalho institucional na região norte
         getContentPane().add(view.criarHeaderApp(), BorderLayout.NORTH);
 
-        // 2. Centro: JTabbedPane contendo as 3 abas principais
+        // Painel central com as abas do sistema (ocupa a maior área da tela)
         getContentPane().add(view.criarTabbedPane(), BorderLayout.CENTER);
 
-        // Barra de status inferior
+        // Barra de status no rodapé
         getContentPane().add(view.criarBarraStatus(), BorderLayout.SOUTH);
 
-        // 1. Configurações da Janela: dimensões e centralização
+        // Ajustes de dimensão da janela e comportamento ao fechar
         setSize(850, 640);
         setMinimumSize(new Dimension(760, 520));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centraliza na tela
+        setLocationRelativeTo(null); // Centraliza a janela no monitor
     }
 
     public static void main(String[] args) {
-        // 5. REQUISITO 5: Look and Feel do Sistema Operacional aplicado ANTES de instanciar o JFrame
+        // Tenta aplicar o Look and Feel nativo do sistema operacional antes de criar os componentes
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
-            // Fallback silencioso se o SO não disponibilizar L&F nativo
+            // Em caso de falha na detecção do tema do SO, mantém o visual padrão do Swing
         }
 
-        // Habilita renderização com anti-aliasing no Swing
+        // Suavização de fontes e bordas para melhorar a legibilidade
         System.setProperty("awt.useSystemAAFontSettings", "on");
         System.setProperty("swing.aatext", "true");
 
-        // Instanciação e exibição da interface gráfica na Event Dispatch Thread (EDT)
+        // Inicializa a aplicação na Event Dispatch Thread (EDT) para garantir a segurança de threads no Swing
         SwingUtilities.invokeLater(() -> {
             SistemaAcademico app = new SistemaAcademico();
             app.setVisible(true);

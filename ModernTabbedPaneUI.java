@@ -61,7 +61,7 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
     }
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
-        // Omite o pontilhado feio dos anos 90
+        // Sobrescrito vazio para não desenhar a borda pontilhada padrão de foco
     }
     public static void main(String[] args) {
         System.out.println("ModernTabbedPaneUI compile check: SUCCESS!");

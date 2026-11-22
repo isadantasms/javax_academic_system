@@ -11,40 +11,39 @@ import java.awt.geom.RoundRectangle2D;
 import java.util.Map;
 
 /**
- * Biblioteca de componentes visuais modernos em Dark Mode (Midnight Pro Edition)
- * para Java Swing (javax.swing).
- * Garante controle absoluto de renderização, alto contraste e visual contemporâneo.
+ * Componentes visuais personalizados para a interface do sistema acadêmico.
+ * Estendem os componentes padrão do Swing (JButton, JTextField, JPanel, etc.)
+ * e sobrescrevem a rotina de pintura (paintComponent) com Java 2D para compor o tema escuro.
  */
 public class ModernComponents {
 
-    // Paleta de Cores Midnight Pro
-    public static final Color COLOR_BG = new Color(11, 15, 23);             // Deep Obsidian Slate #0B0F17
-    public static final Color COLOR_CARD_BG = new Color(21, 29, 42);        // Dark Card Slate #151D2A
-    public static final Color COLOR_INPUT_BG = new Color(13, 18, 28);       // Input Background #0D121C
+    // Paleta de cores base da aplicação
+    public static final Color COLOR_BG = new Color(11, 15, 23);             // Fundo principal da aplicação
+    public static final Color COLOR_CARD_BG = new Color(21, 29, 42);        // Fundo dos painéis internos e tabelas
+    public static final Color COLOR_INPUT_BG = new Color(13, 18, 28);       // Fundo dos campos de entrada de texto
 
-    public static final Color COLOR_TEXT_TITLE = new Color(255, 255, 255);   // White #FFFFFF
-    public static final Color COLOR_TEXT_PRIMARY = new Color(241, 245, 249); // White Slate #F1F5F9
-    public static final Color COLOR_TEXT_LABEL = new Color(148, 163, 184);   // Slate 400 #94A3B8
-    public static final Color COLOR_TEXT_MUTED = new Color(100, 116, 139);   // Slate 500 #64748B
+    public static final Color COLOR_TEXT_TITLE = new Color(255, 255, 255);   // Títulos e cabeçalhos em branco
+    public static final Color COLOR_TEXT_PRIMARY = new Color(241, 245, 249); // Texto principal de leitura
+    public static final Color COLOR_TEXT_LABEL = new Color(148, 163, 184);   // Rótulos de campos (cinza claro)
+    public static final Color COLOR_TEXT_MUTED = new Color(100, 116, 139);   // Textos secundários e dicas
 
-    public static final Color COLOR_BORDER = new Color(42, 55, 74);          // Card Border #2A374A
-    public static final Color COLOR_BORDER_FOCUS = new Color(59, 130, 246);   // Blue Glow #3B82F6
+    public static final Color COLOR_BORDER = new Color(42, 55, 74);          // Borda padrão dos componentes
+    public static final Color COLOR_BORDER_FOCUS = new Color(59, 130, 246);   // Destaque de borda ao receber foco
 
-    public static final Color COLOR_PRIMARY = new Color(37, 99, 235);        // Royal Blue #2563EB
+    public static final Color COLOR_PRIMARY = new Color(37, 99, 235);        // Azul principal (botão de salvar/ação)
     public static final Color COLOR_PRIMARY_HOVER = new Color(29, 78, 216);
-    public static final Color COLOR_SUCCESS = new Color(16, 185, 129);       // Emerald #10B981
+    public static final Color COLOR_SUCCESS = new Color(16, 185, 129);       // Verde para operações de confirmação
     public static final Color COLOR_SUCCESS_HOVER = new Color(5, 150, 105);
-    public static final Color COLOR_DANGER = new Color(239, 68, 68);          // Rose Red #EF4444
+    public static final Color COLOR_DANGER = new Color(239, 68, 68);          // Vermelho para exclusões
     public static final Color COLOR_DANGER_HOVER = new Color(220, 38, 38);
-    public static final Color COLOR_WARNING = new Color(245, 158, 11);       // Amber #F59E0B
+    public static final Color COLOR_WARNING = new Color(245, 158, 11);       // Amarelo para limpeza de formulário
     public static final Color COLOR_WARNING_HOVER = new Color(217, 119, 6);
-    public static final Color COLOR_SECONDARY = new Color(51, 65, 85);       // Slate 700
+    public static final Color COLOR_SECONDARY = new Color(51, 65, 85);       // Cinza ardósia para atualização
     public static final Color COLOR_SECONDARY_HOVER = new Color(71, 85, 105);
 
     /**
-     * UI Customizada para o JTabbedPane:
-     * Elimina completamente o cinza claro do Look and Feel e pinta um fundo escuro elegante
-     * com abas selecionadas em alto relevo e indicador luminoso ciano.
+     * Customização de pintura para o painel de abas (JTabbedPane).
+     * Sobrescreve métodos da BasicTabbedPaneUI para desenhar abas arredondadas e indicador luminoso.
      */
     public static class ModernTabbedPaneUI extends BasicTabbedPaneUI {
 
@@ -58,7 +57,7 @@ public class ModernComponents {
         @Override
         protected void paintTabArea(Graphics g, int tabPlacement, int selectedIndex) {
             Graphics2D g2 = (Graphics2D) g.create();
-            // Fundo escuro total para a barra superior de abas
+            // Pinta a faixa superior de abas com o fundo do sistema
             g2.setColor(COLOR_BG);
             g2.fillRect(0, 0, tabPane.getWidth(), tabPane.getHeight());
             g2.dispose();
@@ -72,15 +71,15 @@ public class ModernComponents {
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
             if (isSelected) {
-                // Aba Ativa: Fundo Card Escuro com topo arredondado
+                // Aba selecionada: cor de destaque com cantos arredondados
                 g2.setColor(COLOR_CARD_BG);
                 g2.fillRoundRect(x + 2, y + 2, w - 4, h, 12, 12);
 
-                // Indicador luminoso na base da aba (Ciano Neon)
+                // Linha colorida na base indicando a aba ativa
                 g2.setColor(new Color(56, 189, 248));
                 g2.fillRoundRect(x + 8, y + h - 3, w - 16, 3, 2, 2);
             } else {
-                // Aba Inativa: Fundo escuro sutil
+                // Aba inativa: tonalidade mais escura para contraste
                 g2.setColor(new Color(15, 23, 34));
                 g2.fillRoundRect(x + 2, y + 4, w - 4, h - 3, 10, 10);
             }
@@ -111,10 +110,10 @@ public class ModernComponents {
 
             if (isSelected) {
                 g2.setFont(font.deriveFont(Font.BOLD, 13f));
-                g2.setColor(Color.WHITE); // Branco nítido na aba ativa
+                g2.setColor(Color.WHITE); // Texto em negrito e branco quando ativa
             } else {
                 g2.setFont(font.deriveFont(Font.PLAIN, 13f));
-                g2.setColor(COLOR_TEXT_LABEL); // Slate 400 de alta legibilidade na aba inativa
+                g2.setColor(COLOR_TEXT_LABEL); // Cinza legível quando inativa
             }
 
             int y = textRect.y + metrics.getAscent();
@@ -133,24 +132,24 @@ public class ModernComponents {
         @Override
         protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects,
                                            int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {
-            // Elimina o pontilhado dos anos 90
+            // Sobrescrito vazio para não desenhar a borda pontilhada nativa de foco
         }
     }
 
     /**
-     * Card moderno escuro com cantos arredondados, borda luminosa sutil e profundidade
+     * Painel arredondado que funciona como contêiner visual (card),
+     * agrupando os componentes com borda e preenchimento adequados.
      */
     public static class ModernCard extends JPanel {
-        private final int cornerRadius;
+        private final int radius;
 
         public ModernCard(int radius) {
-            super();
-            this.cornerRadius = radius;
+            this.radius = radius;
             setOpaque(false);
         }
 
         public ModernCard() {
-            this(16);
+            this(14);
         }
 
         @Override
@@ -161,17 +160,14 @@ public class ModernComponents {
             int w = getWidth();
             int h = getHeight();
 
-            for (int i = 0; i < 3; i++) {
-                g2.setColor(new Color(0, 0, 0, 45 - (i * 12)));
-                g2.fill(new RoundRectangle2D.Float(2 - i, 2 + i, w - 4 + (i * 2), h - 4 + i, cornerRadius + 2, cornerRadius + 2));
-            }
-
+            // Preenchimento do card
             g2.setColor(COLOR_CARD_BG);
-            g2.fill(new RoundRectangle2D.Float(3, 3, w - 7, h - 7, cornerRadius, cornerRadius));
+            g2.fill(new RoundRectangle2D.Float(1, 1, w - 2, h - 2, radius, radius));
 
+            // Borda do card
             g2.setColor(COLOR_BORDER);
             g2.setStroke(new BasicStroke(1.2f));
-            g2.draw(new RoundRectangle2D.Float(3, 3, w - 7, h - 7, cornerRadius, cornerRadius));
+            g2.draw(new RoundRectangle2D.Float(1, 1, w - 3, h - 3, radius, radius));
 
             g2.dispose();
             super.paintComponent(g);
@@ -179,41 +175,41 @@ public class ModernComponents {
     }
 
     /**
-     * Botão moderno com gradiente volumétrico, relevo 3D, hover e texto 100% nítido
+     * Botão customizado que estende JButton, com transições visuais ao passar o mouse (hover)
+     * e ao pressionar, mantendo cantos arredondados.
      */
     public static class ModernButton extends JButton {
-        private final Color baseColor;
+        private final Color normalColor;
         private final Color hoverColor;
-        private boolean isHovered = false;
+        private boolean isHover = false;
         private boolean isPressed = false;
         private final int radius;
 
-        public ModernButton(String text, Icon icon, Color baseColor, Color hoverColor, int radius) {
+        public ModernButton(String text, Icon icon, Color normalColor, Color hoverColor, int radius) {
             super(text, icon);
-            this.baseColor = baseColor;
+            this.normalColor = normalColor;
             this.hoverColor = hoverColor;
             this.radius = radius;
 
-            setFont(new Font("SansSerif", Font.BOLD, 13));
-            setForeground(Color.WHITE);
             setContentAreaFilled(false);
             setFocusPainted(false);
             setBorderPainted(false);
             setOpaque(false);
+            setForeground(Color.WHITE);
+            setFont(new Font("SansSerif", Font.BOLD, 13));
             setCursor(new Cursor(Cursor.HAND_CURSOR));
             setIconTextGap(8);
-            setBorder(new EmptyBorder(8, 16, 8, 16));
 
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(MouseEvent e) {
-                    isHovered = true;
+                    isHover = true;
                     repaint();
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    isHovered = false;
+                    isHover = false;
                     isPressed = false;
                     repaint();
                 }
@@ -232,8 +228,8 @@ public class ModernComponents {
             });
         }
 
-        public ModernButton(String text, Icon icon, Color baseColor, Color hoverColor) {
-            this(text, icon, baseColor, hoverColor, 10);
+        public ModernButton(String text, Icon icon, Color normalColor, Color hoverColor) {
+            this(text, icon, normalColor, hoverColor, 10);
         }
 
         @Override
@@ -241,28 +237,23 @@ public class ModernComponents {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+            Color base = normalColor;
+            if (isPressed) {
+                base = hoverColor.darker();
+            } else if (isHover) {
+                base = hoverColor;
+            }
+
             int w = getWidth();
             int h = getHeight();
 
-            Color curColor = isPressed ? hoverColor.darker() : (isHovered ? hoverColor : baseColor);
+            // Desenho do botão com cantos arredondados
+            g2.setColor(base);
+            g2.fill(new RoundRectangle2D.Float(1, 1, w - 2, h - 2, radius, radius));
 
-            if (!isPressed) {
-                g2.setColor(new Color(0, 0, 0, 80));
-                g2.fill(new RoundRectangle2D.Float(1, 3, w - 2, h - 2, radius, radius));
-            }
-
-            int offset = isPressed ? 2 : 0;
-            GradientPaint gp = new GradientPaint(
-                    0, offset, curColor.brighter(),
-                    0, h - 2 + offset, curColor
-            );
-            g2.setPaint(gp);
-            g2.fill(new RoundRectangle2D.Float(1, 1 + offset, w - 2, h - 3, radius, radius));
-
-            if (!isPressed) {
-                g2.setColor(new Color(255, 255, 255, 70));
-                g2.drawLine(radius, 2, w - radius, 2);
-            }
+            // Linha sutil de reflexo na borda superior
+            g2.setColor(new Color(255, 255, 255, 30));
+            g2.draw(new RoundRectangle2D.Float(1.5f, 1.5f, w - 3, h - 3, radius, radius));
 
             g2.dispose();
             super.paintComponent(g);
@@ -270,21 +261,22 @@ public class ModernComponents {
     }
 
     /**
-     * Campo de texto escuro com cantos arredondados, texto branco legível e glow ao focar
+     * Campo de texto que herda de JTextField, com suporte a texto informativo (placeholder)
+     * e realce da cor da borda quando recebe o foco.
      */
     public static class ModernTextField extends JTextField {
+        private String placeholder = "";
         private boolean hasFocus = false;
         private final int radius;
-        private String placeholder = "";
 
         public ModernTextField(int radius) {
-            super();
             this.radius = radius;
             setOpaque(false);
-            setFont(new Font("SansSerif", Font.PLAIN, 13));
+            setBackground(COLOR_INPUT_BG);
             setForeground(COLOR_TEXT_PRIMARY);
-            setCaretColor(new Color(56, 189, 248));
-            setBorder(new EmptyBorder(8, 12, 8, 12));
+            setCaretColor(Color.WHITE);
+            setFont(new Font("SansSerif", Font.PLAIN, 13));
+            setBorder(new EmptyBorder(8, 14, 8, 14));
 
             addFocusListener(new FocusListener() {
                 @Override
@@ -318,9 +310,11 @@ public class ModernComponents {
             int w = getWidth();
             int h = getHeight();
 
+            // Fundo do campo de texto
             g2.setColor(COLOR_INPUT_BG);
             g2.fill(new RoundRectangle2D.Float(1, 1, w - 2, h - 2, radius, radius));
 
+            // Borda com destaque azul quando o campo está ativo
             if (hasFocus) {
                 g2.setColor(new Color(59, 130, 246, 80));
                 g2.setStroke(new BasicStroke(2.5f));
@@ -337,7 +331,7 @@ public class ModernComponents {
             g2.dispose();
             super.paintComponent(g);
 
-            // Placeholder quando vazio
+            // Exibe o texto de orientação (placeholder) se o campo estiver em branco e sem foco
             if (getText().isEmpty() && !hasFocus && !placeholder.isEmpty()) {
                 Graphics2D gText = (Graphics2D) g.create();
                 gText.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -351,7 +345,8 @@ public class ModernComponents {
     }
 
     /**
-     * Gráfico Procedural em Java 2D (Graphics2D) para exibição visual de dados analíticos
+     * Gráfico de barras desenhado com Java 2D (Graphics2D).
+     * Renderiza dinamicamente as colunas com gradiente de cor e valores numéricos sobre cada barra.
      */
     public static class ModernBarChart extends JPanel {
         private Map<String, Integer> dados;
@@ -383,6 +378,7 @@ public class ModernComponents {
             int chartW = w - paddingLeft - 20;
             int chartH = h - paddingBottom - 20;
 
+            // Identifica o maior valor para definir a proporção de altura das barras
             int maxVal = 1;
             for (int v : dados.values()) {
                 if (v > maxVal) maxVal = v;
@@ -393,9 +389,9 @@ public class ModernComponents {
             int step = chartW / n;
 
             Color[] cores = {
-                    new Color(56, 189, 248),  // Ciano
+                    new Color(56, 189, 248),  // Azul claro
                     new Color(168, 85, 247),  // Roxo
-                    new Color(52, 211, 153),  // Verde
+                    new Color(52, 211, 153),  // Verde esmeralda
                     new Color(251, 191, 36)   // Dourado
             };
 
@@ -411,14 +407,14 @@ public class ModernComponents {
                 g2.setPaint(gp);
                 g2.fillRoundRect(x, y, barW, barH, 8, 8);
 
-                // Valor sobre a barra
+                // Desenha o número correspondente acima de cada barra
                 g2.setColor(Color.WHITE);
                 g2.setFont(new Font("SansSerif", Font.BOLD, 11));
                 String vStr = String.valueOf(val);
                 FontMetrics fm = g2.getFontMetrics();
                 g2.drawString(vStr, x + (barW - fm.stringWidth(vStr)) / 2, y - 4);
 
-                // Legenda abaixo
+                // Legenda de identificação abaixo da barra
                 g2.setColor(COLOR_TEXT_LABEL);
                 g2.setFont(new Font("SansSerif", Font.PLAIN, 10));
                 String label = entry.getKey();
@@ -434,7 +430,7 @@ public class ModernComponents {
     }
 
     /**
-     * Barra de progresso com design moderno
+     * Barra de progresso customizada com cantos circulares e gradiente de cor.
      */
     public static class ModernProgressBar extends JProgressBar {
         public ModernProgressBar(int min, int max) {
@@ -455,11 +451,11 @@ public class ModernComponents {
             int w = getWidth();
             int h = getHeight();
 
-            // Fundo
+            // Fundo da barra
             g2.setColor(COLOR_INPUT_BG);
             g2.fillRoundRect(0, 0, w, h, h, h);
 
-            // Preenchimento
+            // Preenchimento gradiente proporcional ao valor atual
             double ratio = (getValue() - getMinimum()) / (double) (getMaximum() - getMinimum());
             int fillW = (int) (w * Math.min(1.0, Math.max(0.0, ratio)));
             if (fillW > 0) {
@@ -468,7 +464,7 @@ public class ModernComponents {
                 g2.fillRoundRect(0, 0, fillW, h, h, h);
             }
 
-            // Texto
+            // Texto com a indicação da quantidade
             if (isStringPainted()) {
                 g2.setColor(Color.WHITE);
                 g2.setFont(getFont());
@@ -484,7 +480,9 @@ public class ModernComponents {
     }
 
     /**
-     * Renderizador de células da JTable em Dark Mode com Badges coloridos
+     * Renderizador personalizado para a coluna "Bolsista" na JTable.
+     * Em vez de texto puro, desenha uma etiqueta (badge) com cor verde para bolsistas
+     * e cinza para alunos regulares.
      */
     public static class BadgeTableCellRenderer extends DefaultTableCellRenderer {
         @Override

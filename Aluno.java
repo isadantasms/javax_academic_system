@@ -1,6 +1,7 @@
 /**
- * Modelo de domínio para representar um Estudante no Sistema Acadêmico.
- * Demonstra boas práticas de Programação Orientada a Objetos (Encapsulamento).
+ * Classe de modelo que representa um estudante no sistema acadêmico.
+ * Guarda os atributos cadastrais com encapsulamento (getters e setters)
+ * e oferece o método utilitário toTableRow para preenchimento da JTable.
  */
 public class Aluno {
     private String matricula;
@@ -61,6 +62,7 @@ public class Aluno {
         return bolsista ? "Sim" : "Não";
     }
 
+    // Converte os dados do aluno em um array de objetos para inserção direta no modelo da tabela
     public Object[] toTableRow() {
         return new Object[]{matricula, nome, curso, turno, getBolsistaFormatado()};
     }
