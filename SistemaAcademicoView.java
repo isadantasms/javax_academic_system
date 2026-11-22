@@ -70,8 +70,8 @@ public class SistemaAcademicoView {
         listaAlunos.add(new Aluno("12211BSI014", "Thiago Henrique Silveira", "Sistemas de Informação", "Vespertino", false));
         listaAlunos.add(new Aluno("12021BCC032", "Isabela Cristina Dorneles", "Ciência da Computação", "Matutino", true));
         listaAlunos.add(new Aluno("12311BSI008", "Matheus Barreto Cavalcanti", "Sistemas de Informação", "Noturno", false));
-        listaAlunos.add(new Aluno("12121BES019", "Larissa Meireles Fontes", "Engenharia de Software", "Matutino", true));
-        listaAlunos.add(new Aluno("12221BEC005", "Bruno César Fagundes", "Engenharia de Computação", "Noturno", false));
+        listaAlunos.add(new Aluno("12121BCC019", "Larissa Meireles Fontes", "Ciência da Computação", "Matutino", true));
+        listaAlunos.add(new Aluno("12221BIA005", "Bruno César Fagundes", "Inteligência Artificial", "Noturno", false));
         listaAlunos.add(new Aluno("12321BIA022", "Letícia Vasconcelos Duarte", "Inteligência Artificial", "Matutino", true));
     }
 
@@ -403,10 +403,8 @@ public class SistemaAcademicoView {
 
         String[] cursos = {
                 "Selecione um curso...",
-                "Sistemas de Informação",
                 "Ciência da Computação",
-                "Engenharia de Software",
-                "Engenharia de Computação",
+                "Sistemas de Informação",
                 "Inteligência Artificial"
         };
         cbCurso = new JComboBox<>(cursos);
