@@ -53,10 +53,10 @@ public class ModernTabbedPaneUI extends BasicTabbedPaneUI {
         g2.dispose();
     }
     @Override
-    protected void paintContentBorder(Graphics g, int tabPlacement, int width, int height) {
+    protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setColor(new Color(42, 55, 74));
-        g2.drawLine(0, 0, width, 0);
+        g2.drawLine(0, 0, tabPane.getWidth(), 0);
         g2.dispose();
     }
     @Override

@@ -28,7 +28,7 @@ public class TestTabMethods extends BasicTabbedPaneUI {
     protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
     }
     @Override
-    protected void paintContentBorder(Graphics g, int tabPlacement, int width, int height) {
+    protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
     }
     @Override
     protected void paintFocusIndicator(Graphics g, int tabPlacement, Rectangle[] rects, int tabIndex, Rectangle iconRect, Rectangle textRect, boolean isSelected) {

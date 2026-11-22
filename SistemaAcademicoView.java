@@ -66,13 +66,13 @@ public class SistemaAcademicoView {
     }
 
     private void carregarAlunosIniciais() {
-        listaAlunos.add(new Aluno("12111BSI001", "Lucas Mendes Oliveira", "Sistemas de Informação", "Noturno", true));
-        listaAlunos.add(new Aluno("12211BSI014", "Mariana Costa Pereira", "Sistemas de Informação", "Vespertino", false));
-        listaAlunos.add(new Aluno("12021BCC032", "Gabriel Alves Santos", "Ciência da Computação", "Matutino", true));
-        listaAlunos.add(new Aluno("12311BSI008", "Camila Rodrigues Lima", "Sistemas de Informação", "Noturno", false));
-        listaAlunos.add(new Aluno("12121BES019", "Rodrigo Ferreira Silva", "Engenharia de Software", "Matutino", true));
-        listaAlunos.add(new Aluno("12221BEC005", "Beatriz Souza Ramos", "Engenharia de Computação", "Noturno", false));
-        listaAlunos.add(new Aluno("12321BIA022", "Felipe Nascimento Rocha", "Inteligência Artificial", "Matutino", true));
+        listaAlunos.add(new Aluno("12111BSI001", "Ana Clara Guimarães", "Sistemas de Informação", "Noturno", true));
+        listaAlunos.add(new Aluno("12211BSI014", "Thiago Henrique Silveira", "Sistemas de Informação", "Vespertino", false));
+        listaAlunos.add(new Aluno("12021BCC032", "Isabela Cristina Dorneles", "Ciência da Computação", "Matutino", true));
+        listaAlunos.add(new Aluno("12311BSI008", "Matheus Barreto Cavalcanti", "Sistemas de Informação", "Noturno", false));
+        listaAlunos.add(new Aluno("12121BES019", "Larissa Meireles Fontes", "Engenharia de Software", "Matutino", true));
+        listaAlunos.add(new Aluno("12221BEC005", "Bruno César Fagundes", "Engenharia de Computação", "Noturno", false));
+        listaAlunos.add(new Aluno("12321BIA022", "Letícia Vasconcelos Duarte", "Inteligência Artificial", "Matutino", true));
     }
 
     /**
@@ -122,7 +122,7 @@ public class SistemaAcademicoView {
         barraCapacidade.setString(listaAlunos.size() + "/10 vagas");
 
         JLabel badgeJava = criarBadge("Java 21 LTS", new Color(21, 29, 42), new Color(148, 163, 184));
-        JLabel badgeUI = criarBadge("Swing Advanced Pro", new Color(30, 58, 138), new Color(191, 219, 254));
+        JLabel badgeUI = criarBadge("POO - Java Swing", new Color(30, 58, 138), new Color(191, 219, 254));
 
         ladoDireito.add(lblCap);
         ladoDireito.add(barraCapacidade);
@@ -384,7 +384,7 @@ public class SistemaAcademicoView {
         lblMatricula.setForeground(ModernComponents.COLOR_TEXT_LABEL);
 
         txtMatricula = new ModernComponents.ModernTextField();
-        txtMatricula.setText("12411BSI025");
+        txtMatricula.setText("");
         txtMatricula.setToolTipText("Informe o número de matrícula do estudante");
 
         // 2. Nome do Aluno (JLabel + ModernTextField)
@@ -393,7 +393,7 @@ public class SistemaAcademicoView {
         lblNome.setForeground(ModernComponents.COLOR_TEXT_LABEL);
 
         txtNome = new ModernComponents.ModernTextField();
-        txtNome.setText("Juliana Martins Fernandes");
+        txtNome.setText("");
         txtNome.setToolTipText("Digite o nome completo");
 
         // 3. Seleção de Curso (JLabel + JComboBox)
@@ -862,11 +862,11 @@ public class SistemaAcademicoView {
                 new EmptyBorder(6, 16, 6, 16)
         ));
 
-        JLabel lblEsquerda = new JLabel("UFU | Faculdade de Computação — Sistema Acadêmico v2.0 (Midnight Dark Edition) | Ctrl+1..3: Abas");
+        JLabel lblEsquerda = new JLabel("UFU | Faculdade de Computação — Sistema Acadêmico | Atalhos: Ctrl+1, Ctrl+2, Ctrl+3");
         lblEsquerda.setFont(new Font("SansSerif", Font.PLAIN, 11));
         lblEsquerda.setForeground(ModernComponents.COLOR_TEXT_LABEL);
 
-        JLabel lblDireita = new JLabel("Status: Sistema Operacional Normal ●");
+        JLabel lblDireita = new JLabel("Status: Pronto");
         lblDireita.setFont(new Font("SansSerif", Font.BOLD, 11));
         lblDireita.setForeground(new Color(52, 211, 153));
 
@@ -880,35 +880,42 @@ public class SistemaAcademicoView {
         int total = listaAlunos.size();
         int bolsistas = 0;
         int mat = 0, vesp = 0, not = 0;
+        Map<String, Integer> distribuicaoCursos = new LinkedHashMap<>();
 
         for (Aluno a : listaAlunos) {
             if (a.isBolsista()) bolsistas++;
             if ("Matutino".equalsIgnoreCase(a.getTurno())) mat++;
             else if ("Vespertino".equalsIgnoreCase(a.getTurno())) vesp++;
             else if ("Noturno".equalsIgnoreCase(a.getTurno())) not++;
+
+            distribuicaoCursos.put(a.getCurso(), distribuicaoCursos.getOrDefault(a.getCurso(), 0) + 1);
         }
 
         double percBolsistas = total > 0 ? (bolsistas * 100.0 / total) : 0;
+        double percRegulares = total > 0 ? ((total - bolsistas) * 100.0 / total) : 0;
 
-        return "╔══════════════════════════════════════════════════════════╗\n" +
-               "║    UNIVERSIDADE FEDERAL DE UBERLÂNDIA — FACOM            ║\n" +
-               "║       RELATÓRIO CONSOLIDADO DO SISTEMA ACADÊMICO         ║\n" +
-               "╚══════════════════════════════════════════════════════════╝\n\n" +
-               String.format(" ▸ Total de Alunos Matriculados:  %d estudantes\n", total) +
-               String.format(" ▸ Estudantes Bolsistas:          %d (%.1f%%)\n", bolsistas, percBolsistas) +
-               String.format(" ▸ Estudantes Regulares:          %d (%.1f%%)\n\n", (total - bolsistas), (100.0 - percBolsistas)) +
-               "──────────────────────────────────────────────────────────\n" +
-               " DISTRIBUIÇÃO DE ALUNOS POR TURNO:\n" +
-               String.format("   • Matutino:   %d discentes\n", mat) +
-               String.format("   • Vespertino: %d discentes\n", vesp) +
-               String.format("   • Noturno:    %d discentes\n\n", not) +
-               "──────────────────────────────────────────────────────────\n" +
-               " INDICADORES DE DESEMPENHO ACADÊMICO (ANALYTICS):\n" +
-               "   • Índice de Retenção de Vagas:  94.2%\n" +
-               "   • Média Geral de Rendimento:     8.1 / 10.0\n" +
-               "   • Taxa de Conclusão Projetada:   89.0%\n\n" +
-               "══════════════════════════════════════════════════════════\n" +
-               " Status da Base de Dados: Atualizado e Sincronizado.\n";
+        StringBuilder relatorio = new StringBuilder();
+        relatorio.append("╔══════════════════════════════════════════════════════════╗\n");
+        relatorio.append("║    UNIVERSIDADE FEDERAL DE UBERLÂNDIA — FACOM            ║\n");
+        relatorio.append("║       RELATÓRIO CONSOLIDADO DO SISTEMA ACADÊMICO         ║\n");
+        relatorio.append("╚══════════════════════════════════════════════════════════╝\n\n");
+        relatorio.append(String.format(" ▸ Total de Alunos Matriculados:  %d estudantes\n", total));
+        relatorio.append(String.format(" ▸ Estudantes Bolsistas:          %d (%.1f%%)\n", bolsistas, percBolsistas));
+        relatorio.append(String.format(" ▸ Estudantes Regulares:          %d (%.1f%%)\n\n", (total - bolsistas), percRegulares));
+        relatorio.append("──────────────────────────────────────────────────────────\n");
+        relatorio.append(" DISTRIBUIÇÃO DE ALUNOS POR TURNO:\n");
+        relatorio.append(String.format("   • Matutino:   %d discentes\n", mat));
+        relatorio.append(String.format("   • Vespertino: %d discentes\n", vesp));
+        relatorio.append(String.format("   • Noturno:    %d discentes\n\n", not));
+        relatorio.append("──────────────────────────────────────────────────────────\n");
+        relatorio.append(" DISTRIBUIÇÃO DE ALUNOS POR CURSO:\n");
+        for (Map.Entry<String, Integer> entry : distribuicaoCursos.entrySet()) {
+            relatorio.append(String.format("   • %-26s: %d discentes\n", entry.getKey(), entry.getValue()));
+        }
+        relatorio.append("\n══════════════════════════════════════════════════════════\n");
+        relatorio.append(" Status da Base de Dados: Atualizado e Sincronizado.\n");
+
+        return relatorio.toString();
     }
 
     private void atualizarTextoEstatisticas() {
