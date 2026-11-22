@@ -213,4 +213,4 @@ git push -u origin main
 
 ## 👨‍💻 Autor
 
-Desenvolvido por estudantes do curso de **Sistemas de Informação** da **Faculdade de Computação (FACOM)** — **Universidade Federal de Uberlândia (UFU)**.
+Desenvolvido por Isabela Dantas de Moraes, aluna do curso de **Sistemas de Informação** da **Faculdade de Computação (FACOM)** — **Universidade Federal de Uberlândia (UFU)**.
