@@ -24,7 +24,8 @@ import java.awt.*;
  */
 public class SistemaAcademico extends JFrame {
 
-    private final SistemaAcademicoView view;
+    private static final long serialVersionUID = 1L;
+    private final transient SistemaAcademicoView view;
 
     public SistemaAcademico() {
         super("Sistema Acadêmico - Faculdade de Computação (UFU)");
