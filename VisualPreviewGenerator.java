@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 
 /**
  * Utilitário de renderização gráfica em alta qualidade das telas
- * do Sistema Acadêmico (Modern Edition).
+ * do Sistema Acadêmico (Midnight Dark Edition com Abas de Alto Contraste).
  */
 public class VisualPreviewGenerator {
 
@@ -17,10 +17,10 @@ public class VisualPreviewGenerator {
         System.setProperty("swing.aatext", "true");
 
         try {
-            System.out.println(">>> Renderizando capturas do Sistema Acadêmico Moderno 3D...");
+            System.out.println(">>> Renderizando capturas do Sistema Acadêmico Midnight Dark 3D...");
 
-            int largura = 870;
-            int altura = 640;
+            int largura = 890;
+            int altura = 650;
 
             String[] nomes = {"print_aba1_cadastro", "print_aba2_lista", "print_aba3_estatisticas"};
             String[] titulosAbas = {"Cadastro de Aluno", "Lista de Alunos", "Estatísticas"};
@@ -55,7 +55,7 @@ public class VisualPreviewGenerator {
                 System.out.printf("OK [%s]: %s e %s\n", titulosAbas[i], fPng.getName(), fJpg.getName());
             }
 
-            System.out.println(">>> Todas as capturas modernas foram salvas com sucesso!");
+            System.out.println(">>> Todas as capturas em Dark Mode com Abas Perfeitas foram salvas com sucesso!");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,11 +73,11 @@ public class VisualPreviewGenerator {
 
     private static JPanel montarJanelaSimulada(int abaAtiva, int largura, int altura) {
         JPanel window = new JPanel(new BorderLayout());
-        window.setBackground(new Color(241, 245, 249));
+        window.setBackground(ModernComponents.COLOR_BG);
 
-        // 1. Barra de Título elegante do Sistema Operacional (estilo macOS/Linux Dark)
+        // 1. Barra de Título elegante do Sistema Operacional
         JPanel barraTitulo = new JPanel(new BorderLayout());
-        barraTitulo.setBackground(new Color(15, 23, 42)); // Slate 900
+        barraTitulo.setBackground(new Color(8, 12, 19));
         barraTitulo.setPreferredSize(new Dimension(largura, 34));
         barraTitulo.setBorder(new EmptyBorder(0, 14, 0, 10));
 
@@ -88,8 +88,8 @@ public class VisualPreviewGenerator {
 
         JPanel botoesControle = new JPanel(new FlowLayout(FlowLayout.RIGHT, 6, 9));
         botoesControle.setOpaque(false);
-        botoesControle.add(criarCirculoControle(new Color(148, 163, 184))); // Min
-        botoesControle.add(criarCirculoControle(new Color(148, 163, 184))); // Max
+        botoesControle.add(criarCirculoControle(new Color(100, 116, 139))); // Min
+        botoesControle.add(criarCirculoControle(new Color(100, 116, 139))); // Max
         botoesControle.add(criarCirculoControle(new Color(239, 68, 68)));   // Fechar
         barraTitulo.add(botoesControle, BorderLayout.EAST);
 
@@ -108,18 +108,8 @@ public class VisualPreviewGenerator {
 
         window.add(topoContainer, BorderLayout.NORTH);
 
-        // 3. JTabbedPane com as 3 abas e Ícones 3D
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setFont(new Font("SansSerif", Font.BOLD, 13));
-
-        Icon iconeCadastro = IconHelper.getIcon("tab_cadastro_3d.png", 22, 22);
-        Icon iconeLista = IconHelper.getIcon("tab_lista_3d.png", 22, 22);
-        Icon iconeEstatisticas = IconHelper.getIcon("tab_estatisticas_3d.png", 22, 22);
-
-        tabbedPane.addTab("Cadastro de Aluno", iconeCadastro, view.criarPainelCadastro());
-        tabbedPane.addTab("Lista de Alunos", iconeLista, view.criarPainelLista());
-        tabbedPane.addTab("Estatísticas", iconeEstatisticas, view.criarPainelEstatisticas());
-
+        // 3. JTabbedPane com as 3 abas, ModernTabbedPaneUI e setTabComponentAt
+        JTabbedPane tabbedPane = view.criarTabbedPane();
         tabbedPane.setSelectedIndex(abaAtiva);
         window.add(tabbedPane, BorderLayout.CENTER);
 
@@ -127,7 +117,7 @@ public class VisualPreviewGenerator {
         window.add(view.criarBarraStatus(), BorderLayout.SOUTH);
 
         // Borda externa
-        window.setBorder(BorderFactory.createLineBorder(new Color(148, 163, 184), 1));
+        window.setBorder(BorderFactory.createLineBorder(new Color(42, 55, 74), 1));
 
         return window;
     }
