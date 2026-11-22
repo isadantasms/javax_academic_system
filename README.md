@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎓 Sistema Acadêmico — Modern Swing 3D
+# 🎓 Sistema Acadêmico — Java Swing (POO)
 
 [![Java Version](https://img.shields.io/badge/Java-21%20LTS-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Swing UI](https://img.shields.io/badge/GUI-Java%20Swing-5382A1?style=for-the-badge&logo=java&logoColor=white)](https://docs.oracle.com/javase/tutorial/uiswing/)
@@ -8,8 +8,8 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <b>Interface gráfica moderna, responsiva e com profundidade visual 3D desenvolvida em Java Swing puro.</b><br/>
-  <i>Projeto desenvolvido para a disciplina de Sistemas de Informação da Universidade Federal de Uberlândia (UFU).</i>
+  <b>Interface gráfica acadêmica desenvolvida em Java Swing puro para gerenciamento de estudantes.</b><br/>
+  <i>Projeto desenvolvido para a disciplina de Programação Orientada a Objetos / Sistemas de Informação da Universidade Federal de Uberlândia (UFU).</i>
 </p>
 
 [Visão Geral](#-visão-geral) •
@@ -25,20 +25,20 @@
 
 ## 📌 Visão Geral
 
-O **Sistema Acadêmico** é uma aplicação desktop desenvolvida para exemplificar a criação de interfaces ricas, intuitivas e esteticamente refinadas utilizando **Java Swing nativo** (zero dependências externas pesadas). 
+O **Sistema Acadêmico** é uma aplicação desktop desenvolvida para exemplificar a criação de interfaces desktop organizadas, funcionais e consistentes utilizando **Java Swing nativo** (`javax.swing`), sem dependências externas.
 
-O projeto combina os conceitos fundamentais de **Programação Orientada a Objetos (POO)** e **Engenharia de Interfaces** com práticas contemporâneas de **UI/UX Design**:
-- ✨ **Design Moderno:** Inspirado nos princípios de design contemporâneo (Tailwind CSS / Fluent 3D), com paleta de cores balanceada, cards com sombras suaves (*drop shadow*), cantos arredondados e tipografia com antialiasing.
-- 🎨 **Ícones Volumétricos 3D:** Ícones em alta definição com profundidade e iluminação dedicados para cada ação, aba e menu.
-- 📐 **Domínio Avançado de Layouts:** Emprego estruturado e coordenado de `BorderLayout`, `GridLayout`, `FlowLayout` e `GridBagLayout`.
-- 📊 **Métricas e Relatórios em Tempo Real:** Painel analítico reativo sincronizado com o quadro de alunos matriculados.
+O projeto exercita conceitos fundamentais de **Programação Orientada a Objetos (POO)** e **Construção de Interfaces Gráficas**:
+- 🏛️ **Estrutura Acadêmica:** Foco nos requisitos de gestão de discentes, cursos e turnos da Faculdade de Computação (FACOM/UFU).
+- 🎨 **Interface Funcional em Dark Theme:** Paleta sóbria e equilibrada, bom contraste para leitura, cantos arredondados e tipografia nítida.
+- 📐 **Domínio de Gerenciadores de Layout:** Emprego estruturado e coordenado de `BorderLayout`, `GridLayout` e `FlowLayout` conforme as boas práticas do Swing.
+- 📊 **Estatísticas Consolidadas:** Relatório textual analítico em tempo real com dados calculados a partir dos discentes cadastrados (bolsistas, turnos e cursos).
 
 ---
 
 ## 📸 Galeria Visual das Telas
 
 ### 1. Aba "Cadastro de Aluno"
-Formulário ergonômico estruturado com `GridLayout`, `BorderLayout` e `FlowLayout`, contendo `ModernTextField`, `JComboBox`, `JRadioButton` em `ButtonGroup`, `JCheckBox` e botões de ação 3D.
+Formulário de cadastro estruturado com `GridLayout`, `BorderLayout` e `FlowLayout`, contendo campos para número de matrícula, nome completo, curso (`JComboBox`), turno (`JRadioButton` em `ButtonGroup`), condição de bolsa (`JCheckBox`) e botões de ação ("Salvar Aluno" e "Limpar Campos").
 
 <div align="center">
   <img src="print_aba1_cadastro.png" alt="Aba Cadastro de Aluno" width="850px" />
@@ -47,7 +47,7 @@ Formulário ergonômico estruturado com `GridLayout`, `BorderLayout` e `FlowLayo
 <br/>
 
 ### 2. Aba "Lista de Alunos"
-Quadro dinâmico em `JTable` encapsulada em `JScrollPane` com rolagem suave, cabeçalho estilizado e **Badges Pills coloridas** para indicação visual rápida do status de bolsista.
+Quadro geral em `JTable` encapsulada em `JScrollPane`, com busca dinâmica em tempo real (`TableRowSorter`), colunas formatadas e indicação visual para estudantes bolsistas e regulares.
 
 <div align="center">
   <img src="print_aba2_lista.png" alt="Aba Lista de Alunos" width="850px" />
@@ -56,7 +56,7 @@ Quadro dinâmico em `JTable` encapsulada em `JScrollPane` com rolagem suave, cab
 <br/>
 
 ### 3. Aba "Estatísticas"
-Divisão de painéis redimensionável com `JSplitPane`: terminal de métricas consolidado com `JTextArea` de alto contraste à esquerda e card de controle com botão 3D de recálculo à direita.
+Divisão de painéis com `JSplitPane`: relatório acadêmico textual consolidado em `JTextArea` monoespaçado à esquerda e distribuição gráfica por turnos com botão de recálculo à direita.
 
 <div align="center">
   <img src="print_aba3_estatisticas.png" alt="Aba Estatísticas" width="850px" />
@@ -66,15 +66,15 @@ Divisão de painéis redimensionável com `JSplitPane`: terminal de métricas co
 
 ## 📋 Requisitos Acadêmicos (UFU - Trabalho 06)
 
-Todos os requisitos exigidos na folha de avaliação do curso de **Sistemas de Informação (FACOM/UFU)** foram rigorosamente atendidos:
+Todos os requisitos exigidos no Trabalho 06 do curso de **Sistemas de Informação (FACOM/UFU)** foram rigorosamente atendidos:
 
 | Item | Requisito do Trabalho | Como Foi Implementado | Status |
 |:---:|:---|:---|:---:|
 | **1** | Janela principal (`JFrame`) centralizada com título e `JMenuBar` com menus "Arquivo" e "Ajuda". | Janela com dimensões 850x640 px, centralizada na tela, `JMenuBar` com atalhos de teclado (Mnemonics e Accelerators) e opções de navegação. | ✅ 100% |
-| **2** | `JTabbedPane` com 3 abas ("Cadastro", "Lista", "Estatísticas"). Na aba Cadastro: `JLabel`, `JTextField`, `JComboBox`, `JRadioButton` em `ButtonGroup`, `JCheckBox`, `JButton` em layouts `BorderLayout`, `GridLayout` e `FlowLayout`. | `JTabbedPane` estilizado com ícones 3D em cada aba. Aba de Cadastro estruturada com `BorderLayout` geral, `GridLayout(5, 2)` para o formulário e `FlowLayout` para grupos de botões. | ✅ 100% |
-| **3** | `JTable` dentro de `JScrollPane` com colunas apropriadas e botões organizados. | `JTable` com `DefaultTableModel`, colunas apropriadas, badges visuais customizados e botões de ação alinhados no rodapé com `FlowLayout`. | ✅ 100% |
-| **4** | `JSplitPane` com `JTextArea` de um lado e `JButton` do outro. | `JSplitPane(HORIZONTAL_SPLIT)` dividindo a tela em relatório analítico monoespaçado à esquerda e card de ação com botão à direita. | ✅ 100% |
-| **5** | Organização visual, alinhamento, pelo menos 3 layouts e Look and Feel do SO. | Coordenação entre 4 layouts (`BorderLayout`, `GridLayout`, `FlowLayout`, `GridBagLayout`), acabamento em cards com sombras e Look and Feel do sistema operacional. | ✅ 100% |
+| **2** | `JTabbedPane` com 3 abas ("Cadastro", "Lista", "Estatísticas"). Na aba Cadastro: `JLabel`, `JTextField`, `JComboBox`, `JRadioButton` em `ButtonGroup`, `JCheckBox`, `JButton` em layouts `BorderLayout`, `GridLayout` e `FlowLayout`. | `JTabbedPane` com abas customizadas. Aba de Cadastro estruturada com `BorderLayout` geral, `GridLayout(5, 2)` para o formulário e `FlowLayout` para os grupos de botões. | ✅ 100% |
+| **3** | `JTable` dentro de `JScrollPane` com colunas apropriadas e botões organizados. | `JTable` com `DefaultTableModel`, colunas apropriadas, renderizadores customizados e botões de ação alinhados no rodapé com `FlowLayout`. | ✅ 100% |
+| **4** | `JSplitPane` com `JTextArea` de um lado e `JButton` do outro. | `JSplitPane(HORIZONTAL_SPLIT)` dividindo a tela em relatório analítico monoespaçado à esquerda e painel com botão de recálculo à direita. | ✅ 100% |
+| **5** | Organização visual, alinhamento, pelo menos 3 layouts e coerência visual. | Coordenação entre 3 layouts explícitos (`BorderLayout`, `GridLayout`, `FlowLayout`), acabamento organizado em cards e barra de status informativa. | ✅ 100% |
 
 ---
 
@@ -197,7 +197,7 @@ git init
 git add .
 
 # 3. Criar o primeiro commit
-git commit -m "feat: Sistema Acadêmico moderno em Java Swing com ícones 3D (Trabalho 06 UFU)"
+git commit -m "feat: Sistema Acadêmico em Java Swing para POO (Trabalho 06 UFU)"
 
 # 4. Definir a branch principal como main
 git branch -M main
